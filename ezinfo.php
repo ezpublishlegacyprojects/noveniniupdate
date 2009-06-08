@@ -28,12 +28,12 @@
 */
 
 /*!
-  \class eZFindInfo ezinfo.php
-  \brief The class eZFindInfo does
+  \class novenIniAdvancedUpdate ezinfo.php
+  \brief The class novenIniAdvancedUpdate does
 
 */
 
-class eZFindInfo
+class novenIniAdvancedUpdate
 {
     static function info()
     {
