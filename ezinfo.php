@@ -41,7 +41,7 @@ class novenIniAdvancedUpdate
             'Name' => "Noven INI Advanced Update",
             'Version' => "1.0.0",
             'Copyright' => "Copyright © 2009 Jean-Luc Nguyen, Noven.",
-            'Info_url' => "http://ez.no",
+            'Info_url' => "http://projects.ez.no/noveniniupdate",
             'License' => "GNU General Public License v2.0",
         );
     }
