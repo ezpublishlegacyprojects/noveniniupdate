@@ -37,7 +37,8 @@ $ViewList['view'] = array(
 	'params'					=> 	array(),
 	'unordered_params'			=> 	array( 'update' => 'Update' ),	
 	'single_post_actions'		=> 	array(  'updateenvbutton' => 'UpdateEnvButton' ),
-	'post_action_parameters'	=> 	array()
+	'post_action_parameters'	=> 	array(),
+	'default_navigation_part'	=> 'noveniniupdatenavigationpart',
 );
 
 /*
@@ -49,6 +50,7 @@ $ViewList['edit'] = array(
 	'unordered_params'          =>  array(  'env' => 'Env', 'line' => 'Line', 'path' => 'Path' ),	
 	'single_post_actions'		=>  array(  'writesetting'	=> 'WriteSetting',
 										    'cancelsetting'	=> 'CancelSetting' ),
-	'post_action_parameters'	=> 	array()
+	'post_action_parameters'	=> 	array(),
+	'default_navigation_part'	=> 'noveniniupdatenavigationpart',
 );
 

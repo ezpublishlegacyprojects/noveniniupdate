@@ -1,4 +1,5 @@
 {include uri="design:settings/settings_validation.tpl"}
+{include uri="design:noveniniupdate/no_left_menu.tpl"}
 
 {def $xmlDataTypes = ezini( 'XmlSettings', 'XmlType', 'noveniniupdate.ini' )}
 

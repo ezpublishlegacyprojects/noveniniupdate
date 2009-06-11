@@ -141,8 +141,12 @@ if ( $Module->isCurrentAction( 'UpdateEnvButton' ) )
             {
                 if ( is_array( $t ) )
                 {
+                    /*
+			         * Dirty Hack to avoid the "empty value" validation bug in the validate function (kernel/settings/validation.php)
+			         * If the value is empty, we replace it by a space, and then trim it AFTER the validation
+			         */
+                    $valueToWrite   = !empty($t['value']) ? $t['value'] : ' ';
                     $settingName    = $t['name'];
-                    $valueToWrite   = $t['value'];
                     $settingType    = $t['type'];
                     $block          = $t['block'];
                     $hasValidationError = false;
@@ -160,7 +164,8 @@ if ( $Module->isCurrentAction( 'UpdateEnvButton' ) )
 
                     if ( !$hasValidationError )
                     {
-                        if ( $settingType == 'array' )
+                        $valueToWrite = trim($valueToWrite);
+                    	if ( $settingType == 'array' )
                         {
                             $valueArray = explode( "\n", $valueToWrite );
                             $valuesToWriteArray = array();
@@ -199,23 +204,24 @@ if ( $Module->isCurrentAction( 'UpdateEnvButton' ) )
                         if ( !$writeOk )
                         {   
                             $hasError = true;
-                            error_log( 'noveniniupdate validation_error: true' );
                             $errorType = 'write_error';
-                            error_log( 'noveniniupdate validation_error_type: write_error' );
                             $errorPath = $path;
-                            error_log( 'noveniniupdate path: '.$path );
                             $errorFilename = $iniFile . '.append.php';
-                            error_log( 'noveniniupdate filename: '.$iniFile . '.append.php' );
+                            
+                            $errMsg = "Write error on file $iniFile.append.php";
+                            eZLog::write($errMsg, 'noveniniupdate-error.log');
+                            eZDebug::writeError($errMsg, "NovenINIUpdate");
                         }
                     }
                     else // found validation errors...
                     {
                         $hasError = true;
-                        error_log( 'noveniniupdate validation_error: true' );
                         $errorType = $validationResult['type'];
-                        error_log( 'noveniniupdate validation_error_type: '.$validationResult['type'] );
                         $errorMessage = $validationResult['message'];
-                        error_log( 'noveniniupdate validation_error_message: '.$validationResult['message'] );
+                        
+                        $errMsg = 'Validation Error. Error Type : '.$validationResult['type'].' / Error Message : '.$validationResult['message'];
+                        eZLog::write($errMsg, 'noveniniupdate-error.log');
+                        eZDebug::writeError($errMsg, "NovenINIUpdate");
                     }
                 }
             }            
@@ -225,7 +231,8 @@ if ( $Module->isCurrentAction( 'UpdateEnvButton' ) )
         {
             $tpl->setVariable( 'validation_error', true );
             $tpl->setVariable( 'validation_error_type', $errorType );
-            $tpl->setVariable( 'path', $errorPath );
+            if(isset($errorPath))
+            	$tpl->setVariable( 'path', $errorPath );
             $tpl->setVariable( 'filename', $errorFilename );
             $tpl->setVariable( 'validation_error_message', $errorMessage );
         }
@@ -248,4 +255,3 @@ $Result['path'] = array(
                         array(  'url'   => false,
                                 'text'  => ezi18n( 'extension/noveniniupdate', 'Noven advanced INI parameters' ) ) );
 
-?>

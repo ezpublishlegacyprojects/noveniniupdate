@@ -143,7 +143,15 @@ if ( $Module->isCurrentAction( 'WriteSetting' ) )
     if ( $http->hasPostVariable( 'SettingName' ) )
         $settingName = trim( $http->postVariable( 'SettingName' ) );
     if ( $http->hasPostVariable( 'Value' ) )
-        $valueToWrite = $http->postVariable( 'Value' );
+    {
+        /*
+         * Dirty Hack to avoid the "empty value" validation bug in the validate function (kernel/settings/validation.php)
+         * If the value is empty, we replace it by a space, and then trim it AFTER the validation
+         */
+    	$tmpValue = $http->postVariable( 'Value' );
+    	$valueToWrite = !empty($tmpValue) ? $tmpValue : ' ';
+    	unset($tmpValue);
+    }
 
     if ( $http->hasPostVariable( 'LabelEnv' ) )
         $labelEnv = trim( $http->postVariable( 'LabelEnv' ) );
@@ -173,7 +181,8 @@ if ( $Module->isCurrentAction( 'WriteSetting' ) )
 
     if ( !$hasValidationError )
     {
-        if ( $settingType == 'array' )
+        $valueToWrite = trim($valueToWrite);
+    	if ( $settingType == 'array' )
         {
             $valueArray = explode( "\n", $valueToWrite );
             $valuesToWriteArray = array();
@@ -263,4 +272,3 @@ $Result['path'] = array(
                         array(  'url'   => false,
                                 'text'  => ezi18n( 'extension/noveniniupdate', 'Noven advanced INI parameters' ) ) );
 
-?>

@@ -1,4 +1,5 @@
 {include uri="design:settings/settings_validation.tpl"}
+{include uri="design:noveniniupdate/no_left_menu.tpl"}
 
 <script type="text/javascript">
 function confirmUpdateEnv(curEnv) {ldelim}
@@ -41,7 +42,7 @@ function confirmUpdateEnv(curEnv) {ldelim}
 					{/if}
 					
 					{if $confirm_label}
-					<div class="object"><p><strong>{$confirm_label}</strong></p></div>
+					<div class="object"><p style="color:red;"><strong>{$confirm_label}</strong></p></div>
 					{/if}					
 					
 					{if $envs|count}

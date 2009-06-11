@@ -33,7 +33,7 @@
 
 */
 
-class novenIniAdvancedUpdate
+class NovenINIAdvancedUpdateInfo
 {
     static function info()
     {
