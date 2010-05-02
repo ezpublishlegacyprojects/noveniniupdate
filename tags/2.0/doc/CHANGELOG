@@ -1,0 +1,18 @@
+2.1
+-----------------
+Fixed bug with NovenConfigAbstractUpdater::checkIsEnvSupported() => returned always true
+Implemented diff feature between current value and "to be applied" value
+Implemented backup feature (with new --backup option to CLI script)
+Environment is now stored in *ezsite_data* table 
+Added support for eZDFSFileHandler
+
+2.0
+-----------------
+Global refactoring (creation of classes, interface, exception...).
+CLI script.
+Support of Cluster mode (configuration in a separate tag in XML file, also updates index_cluster.php).
+Deletion of ability to edit an INI setting before switching => duplicates the native INI editing interface in the admin.
+
+1.0
+-----------------
+Initial release
